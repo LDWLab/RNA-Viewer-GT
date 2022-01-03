@@ -23,3 +23,5 @@ npm run watch
 
 ## Web app implementation
 **Refer index.html and component.html for implementation example**
+uiTemplate.ts is currently hardcoded to show base pairings for one molecule (1C2W). 
+The index of nucleotides is shifted by 1 to adjust for a bug in the PDBe source code. 
