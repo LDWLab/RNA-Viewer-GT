@@ -37,7 +37,20 @@ export class DataService {
         };
     }
 
+    async getFR3DData(pdbId: string): Promise<string> {
+        try {
+            const csvUrl = `http://rna.bgsu.edu/rna3dhub/pdb/${pdbId.toLowerCase()}/interactions/fr3d/basepairs/csv`;
+            return await (await fetch(csvUrl)).text() as string;
+        } catch (e) { 
+            this.handleFR3DError(e)
+            return '';
+        };
+    }
     private handleError(e: any): void {
-        console.log(`RNA topology data not unavailable!`, e);
+        console.log(`RNA topology data not available!`, e);
+    }
+    private handleFR3DError(e: any): void {
+        console.log(`FR3D mapping data not available!`, e);
     }
 }
+
