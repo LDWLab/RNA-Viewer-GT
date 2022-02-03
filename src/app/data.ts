@@ -39,7 +39,8 @@ export class DataService {
 
     async getFR3DData(pdbId: string): Promise<string> {
         try {
-            const csvUrl = `http://rna.bgsu.edu/rna3dhub/pdb/${pdbId.toLowerCase()}/interactions/fr3d/basepairs/csv`;
+            const csvUrl = `https://rnacentral.org/api/internal/proxy?url=http://rna.bgsu.edu/rna3dhub/pdb/${pdbId.toLowerCase()}/interactions/fr3d/basepairs/csv`
+            //const csvUrl = `http://rna.bgsu.edu/rna3dhub/pdb/${pdbId.toLowerCase()}/interactions/fr3d/basepairs/csv`;
             return await (await fetch(csvUrl)).text() as string;
         } catch (e) { 
             this.handleFR3DError(e)
