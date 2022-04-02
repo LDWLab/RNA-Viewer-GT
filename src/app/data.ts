@@ -36,15 +36,26 @@ export class DataService {
             return void 0;
         };
     }
-
-    async getFR3DData(pdbId: string): Promise<string> {
+    async getFR3DData(pdbId: string, chainId: string): Promise<JSON | undefined> {
         try {
-            const csvUrl = `https://rnacentral.org/api/internal/proxy?url=http://rna.bgsu.edu/rna3dhub/pdb/${pdbId.toLowerCase()}/interactions/fr3d/basepairs/csv`
+            const csvUrl = `http://rna.bgsu.edu/rna3dhub/rest/getSequenceBasePairs?pdb_id=${pdbId.toLowerCase()}&chain=${chainId}`
+            //const csvUrl = `https://rnacentral.org/api/internal/proxy?url=http://rna.bgsu.edu/rna3dhub/rest/getSequenceBasePairs?pdb_id=${pdbId.toLowerCase()}&chain=${chainId}&only_nested=True`
             //const csvUrl = `http://rna.bgsu.edu/rna3dhub/pdb/${pdbId.toLowerCase()}/interactions/fr3d/basepairs/csv`;
-            return await (await fetch(csvUrl)).text() as string;
+            return await (await fetch(csvUrl)).json() as JSON;
         } catch (e) { 
             this.handleFR3DError(e)
-            return '';
+            return void 0;
+        };
+    }
+    async getFR3DNestedData(pdbId: string, chainId: string): Promise<JSON | undefined> {
+        try {
+            const csvUrl = `http://rna.bgsu.edu/rna3dhub/rest/getSequenceBasePairs?pdb_id=${pdbId.toLowerCase()}&chain=${chainId}&only_nested=True`
+            //const csvUrl = `https://rnacentral.org/api/internal/proxy?url=http://rna.bgsu.edu/rna3dhub/rest/getSequenceBasePairs?pdb_id=${pdbId.toLowerCase()}&chain=${chainId}&only_nested=True`
+            //const csvUrl = `http://rna.bgsu.edu/rna3dhub/pdb/${pdbId.toLowerCase()}/interactions/fr3d/basepairs/csv`;
+            return await (await fetch(csvUrl)).json() as JSON;
+        } catch (e) { 
+            this.handleFR3DError(e)
+            return void 0;
         };
     }
     private handleError(e: any): void {
